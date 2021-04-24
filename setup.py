@@ -30,7 +30,7 @@ import traceback
 import shutil
 import re
 import os
-__NAME__ = "flask-cognito-auth"
+__NAME__ = "flask-cognito-auth-access-token"
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 VERSION_FILE = os.path.join(ROOT, __NAME__.replace("-", "_"), ".version")
@@ -125,8 +125,8 @@ def do_setup():
         long_description_content_type="text/markdown",
         keywords=['flask', 'amazon cognito', 'json web token',
                   'authentication', 'autorization', 'oauth2', 'saml'],
-        author='Ankit Shrivastava',
-        url='https://github.com/shrivastava-v-ankit/flask-cognito-auth',
+        author='Jaison Kaleeckal',
+        url='https://github.com/kaleekan/flask-cognito-auth-access-token',
         packages=find_packages(include=[__NAME__.replace("-", "_")]),
         include_package_data=True,
         setup_requires=setups,
@@ -135,8 +135,8 @@ def do_setup():
         python_requires='>=3.4',
         platforms='any',
         project_urls={
-            'Source': 'https://github.com/shrivastava-v-ankit/flask-cognito-auth/',
-            'Tracker': 'https://github.com/shrivastava-v-ankit/flask-cognito-auth/issues',
+            'Source': 'https://github.com/kaleekan/flask-cognito-auth-access-token',
+            'Tracker': 'https://github.com/kaleekan/flask-cognito-auth-access-token/issues',
         },
         classifiers=[
             'Development Status :: 5 - Production/Stable',
