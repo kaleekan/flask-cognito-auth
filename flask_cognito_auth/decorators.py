@@ -81,7 +81,7 @@ def callback_handler(fn):
 
         # the response:
         # http://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
-        if response.status_code == requests.codes.ok:
+        if response.status_code == requests.codes.ok: #pylint: disable=E1101
             logger.info("Code exchange is successfull.")
             logger.info("Validating CSRF state exchange of AWS Cognito")
 
@@ -126,11 +126,12 @@ def callback_handler(fn):
                     groups = id_token['cognito:groups']
 
                 update_session(username=username,
-                               id=id_token["sub"],
-                               groups=groups,
-                               email=email,
-                               expires=id_token["exp"],
-                               refresh_token=response.json()["refresh_token"])
+                               id = id_token["sub"],
+                               groups = groups,
+                               email = email,
+                               expires = id_token["exp"],
+                               refresh_token = response.json()["refresh_token"],
+                               access_token = response.json()["access_token"])
         if not auth_success:
             error_uri = config.redirect_error_uri
             if error_uri:
@@ -143,7 +144,7 @@ def callback_handler(fn):
     return wrapper
 
 
-def update_session(username: str, id, groups, email: str, expires, refresh_token):
+def update_session(username: str, id, groups, email: str, expires, refresh_token, access_token):
     """
     Method to update the Flase Session object with the informations after
     successfull login.
@@ -161,6 +162,7 @@ def update_session(username: str, id, groups, email: str, expires, refresh_token
     session['email'] = email
     session['expires'] = expires
     session['refresh_token'] = refresh_token
+    session['access_token'] = access_token
 
 
 def verify(token: str, access_token: str = None):
@@ -201,12 +203,13 @@ def logout_handler(fn):
     """
     @wraps(fn)
     def wrapper(*args, **kwargs):
-        update_session(username=None,
-                       id=None,
-                       groups=None,
-                       email=None,
-                       expires=None,
-                       refresh_token=None)
+        update_session(username = None,
+                       id = None,
+                       groups = None,
+                       email = None,
+                       expires = None,
+                       refresh_token = None,
+                       access_token = None)
         logger.info(
             "AWS Cognito Login, redirecting to AWS Cognito for logout and terminating sessions")
 
